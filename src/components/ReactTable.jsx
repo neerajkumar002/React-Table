@@ -361,11 +361,11 @@ const columns = [
   },
   {
     Header: "First Name",
-    accessor: "first name",
+    accessor: "first_name",
   },
   {
     Header: "Last Name",
-    accessor: "last name",
+    accessor: "last_name",
   },
   {
     Header: "Emails",
@@ -378,12 +378,46 @@ const columns = [
 ];
 
 const ReactTable = () => {
-  const table = useTable({
-    columns,
-    data,
-  });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({
+      columns,
+      data,
+    });
 
-  return <div></div>;
+  return (
+    <div className="contianer">
+      <table {...getTableProps()}>
+        <thead>
+          {headerGroups.map((hGroup, i) => (
+            <tr {...hGroup.getHeaderGroupProps()} key={i}>
+              {hGroup.headers.map((header, i) => (
+                <th {...header.getHeaderProps()} key={i}>
+                  {header.render("Header")}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+
+        {/* table body */}
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row, i) => {
+            prepareRow(row);
+
+            return (
+              <tr {...row.getRowProps()} key={i}>
+                {row.cells.map((cell, i) => (
+                  <td {...cell.getCellProps()} key={i}>
+                    {cell.render("Cell")}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
 };
 
 export default ReactTable;

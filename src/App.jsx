@@ -1,9 +1,10 @@
-import Table from "./components/Table";
+import ReactTable from "./components/ReactTable";
 
+ 
 function App() {
   return (
     <>
-      <Table />
+      <ReactTable/>
     </>
   );
 }
